@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.McpExample.ProductSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.McpExample.App", "src\Dotnet.McpExample.App\Dotnet.McpExample.App.csproj", "{9FD1B33A-8B35-44FE-96B3-A698E40C66DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.McpExample.Api", "src\Dotnet.McpExample.Api\Dotnet.McpExample.Api.csproj", "{AD4E2E25-1F84-417F-B2B2-75C95CAF9433}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dotnet.Mcp.Example.Core", "src\Dotnet.Mcp.Example.Core\Dotnet.Mcp.Example.Core.csproj", "{68C7087A-F20E-41CB-868B-42208EB33E76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +30,8 @@ Global
 		{8CDA2E17-0500-41F8-AB70-407AE358E59F} = {6CD4F710-32DE-4706-85C2-8AEDBBD3592D}
 		{06EDDFA3-F24C-48A8-8060-D49A45C8FBF6} = {6CD4F710-32DE-4706-85C2-8AEDBBD3592D}
 		{9FD1B33A-8B35-44FE-96B3-A698E40C66DB} = {6CD4F710-32DE-4706-85C2-8AEDBBD3592D}
+		{AD4E2E25-1F84-417F-B2B2-75C95CAF9433} = {6CD4F710-32DE-4706-85C2-8AEDBBD3592D}
+		{68C7087A-F20E-41CB-868B-42208EB33E76} = {6CD4F710-32DE-4706-85C2-8AEDBBD3592D}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{694EED7E-1C86-4E39-8403-678A83FEF8C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,5 +50,13 @@ Global
 		{9FD1B33A-8B35-44FE-96B3-A698E40C66DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FD1B33A-8B35-44FE-96B3-A698E40C66DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FD1B33A-8B35-44FE-96B3-A698E40C66DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD4E2E25-1F84-417F-B2B2-75C95CAF9433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD4E2E25-1F84-417F-B2B2-75C95CAF9433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD4E2E25-1F84-417F-B2B2-75C95CAF9433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD4E2E25-1F84-417F-B2B2-75C95CAF9433}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68C7087A-F20E-41CB-868B-42208EB33E76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68C7087A-F20E-41CB-868B-42208EB33E76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68C7087A-F20E-41CB-868B-42208EB33E76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68C7087A-F20E-41CB-868B-42208EB33E76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

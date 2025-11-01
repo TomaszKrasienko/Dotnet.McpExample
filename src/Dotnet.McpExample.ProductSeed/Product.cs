@@ -1,5 +1,8 @@
 ﻿namespace Dotnet.McpExample.ProductSeed;
 
+/// <summary>
+/// Represents a product with its basic information including name, EAN code, and pricing.
+/// </summary>
 public sealed class Product
 {
     public string Name { get; }
@@ -16,7 +19,10 @@ public sealed class Product
         UnitNetPrice = unitNetPrice;
     }
 
-    public static Product Create(string name, string eanCode, decimal unitNetPrice)
+    public static Product Create(
+        string name,
+        string eanCode,
+        decimal unitNetPrice)
         => new(
             name,
             eanCode,
