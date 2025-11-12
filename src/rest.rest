@@ -1,0 +1,5 @@
+### Get Products 1
+http://localhost:5002/products
+
+### Get Products 2
+http://localhost:5007/products

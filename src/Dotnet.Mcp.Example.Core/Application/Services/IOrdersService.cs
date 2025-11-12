@@ -65,9 +65,21 @@ internal sealed class OrdersService(
         decimal quantity,
         CancellationToken cancellationToken)
     {
+        var order = await dbContext
+            .Set<Order>()
+            .SingleOrDefaultAsync(x => x.Id == orderId, cancellationToken);
 
+        if (order is null)
+        {
+            throw new ArgumentException("Order not found");
+        }
         
+        order.AddPosition(
+            productName, 
+            unitPrice,
+            quantity);
         
+        await dbContext.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteOrderAsync(Guid orderId, CancellationToken cancellationToken)

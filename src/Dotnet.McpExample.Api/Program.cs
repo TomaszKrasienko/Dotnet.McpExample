@@ -1,4 +1,8 @@
+using Dotnet.Mcp.Example.Core.Application.DTOs;
 using Dotnet.Mcp.Example.Core.Application.Services;
+using Dotnet.Mcp.Example.Core.Domain.Entities;
+using Dotnet.Mcp.Example.Core.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCore();
@@ -21,15 +25,15 @@ app.MapPost(
         CreateContractorRequest request,
         IContractorsService service,
         CancellationToken cancellationToken) =>
-{
-    var contractor = await service.CreateAsync(
-        request.Name,
-        cancellationToken);
-    
-    return Results.Created(
-        $"/api/contractors/{contractor.Id}",
-        new ContractorResponse(contractor.Id, contractor.Name));
-});
+    {
+        var contractor = await service.CreateAsync(
+            request.Name,
+            cancellationToken);
+        
+        return Results.Created(
+            $"/api/contractors/{contractor.Id}",
+            new ContractorResponse(contractor.Id, contractor.Name));
+    });
 
 app.MapPost(
     "/api/orders",
@@ -37,15 +41,15 @@ app.MapPost(
         CreateOrderRequest request,
         IOrdersService service,
         CancellationToken cancellationToken) =>
-{
-    var orderId = await service.CreateOrderAsync(
-        request.ContractorId,
-        cancellationToken);
-    
-    return Results.Created(
-        $"/api/orders/{orderId}",
-        new CreateOrderResponse(orderId));
-});
+    {
+        var orderId = await service.CreateOrderAsync(
+            request.ContractorId,
+            cancellationToken);
+        
+        return Results.Created(
+            $"/api/orders/{orderId}",
+            new CreateOrderResponse(orderId));
+    });
 
 app.MapPost(
     "/api/orders/positions",
@@ -53,16 +57,50 @@ app.MapPost(
         AddOrderPositionRequest request,
         IOrdersService service,
         CancellationToken cancellationToken) =>
-{
-    await service.AddPositionAsync(
-        request.OrderId,
-        request.ProductName,
-        request.UnitPrice,
-        request.Quantity,
-        cancellationToken);
+    {
+        await service.AddPositionAsync(
+            request.OrderId,
+            request.ProductName,
+            request.UnitPrice,
+            request.Quantity,
+            cancellationToken);
 
-    return Results.NoContent();
-});
+        return Results.NoContent();
+    });
+
+app.MapGet(
+    "/api/orders",
+    async (
+        ApplicationDbContext dbContext,
+        CancellationToken cancellationToken) =>
+    {
+        var orders = await dbContext
+            .Set<Order>()
+            .Include(o => o.Positions)
+            .ToListAsync(cancellationToken);
+
+        if (!orders.Any())
+        {
+            return Results.NotFound();
+        }
+
+        var orderDtos = orders.Select(order => new OrderDto
+        {
+            Id = order.Id,
+            Number = order.Number,
+            CreatedAt = order.CreatedAt,
+            Status = order.Status.Value,
+            ContractorId = order.ContractorId,
+            Positions = order.Positions.Select(position => new OrderPositionDto
+            {
+                Id = position.Id,
+                UnitPrice = position.UnitPrice,
+                Quantity = position.Quantity
+            }).ToList()
+        }).ToList();
+        
+        return Results.Ok(orderDtos);
+    });
 
 app.MapPost(
     "/api/invoices",
@@ -70,13 +108,13 @@ app.MapPost(
         CreateInvoiceRequest request,
         IInvoicesService service,
         CancellationToken cancellationToken) =>
-{
-    var invoiceId = await service.CreateInvoiceFromOrderAsync(
-        request.OrderId,
-        cancellationToken);
+    {
+        var invoiceId = await service.CreateInvoiceFromOrderAsync(
+            request.OrderId,
+            cancellationToken);
 
-    return Results.Created($"/api/invoices/{invoiceId}", new CreateInvoiceResponse(invoiceId));
-});
+        return Results.Created($"/api/invoices/{invoiceId}", new CreateInvoiceResponse(invoiceId));
+    });
 
 app.MapDelete(
     "/api/orders/{id:guid}",
@@ -84,10 +122,10 @@ app.MapDelete(
         Guid id,
         IOrdersService service,
         CancellationToken cancellationToken) =>
-{
-    await service.DeleteOrderAsync(id, cancellationToken);
-    return Results.NoContent();
-});
+    {
+        await service.DeleteOrderAsync(id, cancellationToken);
+        return Results.NoContent();
+    });
 
 app.Run();
 
