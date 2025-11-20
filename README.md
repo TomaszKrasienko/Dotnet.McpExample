@@ -167,6 +167,28 @@ Once connected to an MCP client like Claude, you can ask natural language questi
 
 The MCP server will automatically translate these requests into the appropriate tool calls or prompt queries.
 
-## License
+## Scenario 1
 
-This project is provided as-is for educational and demonstration purposes.
+- Use my Dotnet Days example server to clear the data.
+- Use my Dotnet Days example server to seed the data.
+- Create a new contractor named **Inetum**.
+- What data do you need to create a new order and its positions?
+- Okay, for our new contractor, add a new order with two positions:
+  - Logitech MX Keys, 4 pcs, 400
+  - NuPhy Air75, 7 pcs, 600
+- Confirm the order.
+- Confirm the order again.
+- Now, based on this order, create an invoice.
+- Add **get_orders_text** with the prompt: "Get today's invoices."
+
+## Scenario 2
+
+- Add **get_invoices_text**,**get_contractors_text**
+- Can you give me summarized quantity of invoices grouped by month and contractor with names?
+- Okay, so now give me all invoices of ... in pdf table
+
+### Scenario 3
+- Add **get_supplier_products**.
+- Add **get_supplier_products** again.
+- Compare the products and create orders for both suppliers with the five most cost-efficient products.
+

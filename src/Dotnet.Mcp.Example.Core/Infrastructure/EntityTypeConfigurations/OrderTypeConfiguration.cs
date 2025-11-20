@@ -67,6 +67,11 @@ internal sealed class OrderTypeConfiguration : IEntityTypeConfiguration<Order>
                 .IsRequired()
                 .HasColumnName("Quantity")
                 .HasPrecision(18, 2);
+
+            position
+                .Property(x => x.ProductName)
+                .IsRequired()
+                .HasColumnName("ProductName");
         });
     }
 }

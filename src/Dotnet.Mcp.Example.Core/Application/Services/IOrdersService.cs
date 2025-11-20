@@ -21,6 +21,10 @@ public interface IOrdersService
     Task DeleteOrderAsync(
         Guid orderId,
         CancellationToken cancellationToken);
+    
+    Task ConfirmOrderAsync(
+        Guid orderId,
+        CancellationToken cancellationToken);
 }
 
 internal sealed class OrdersService(
@@ -86,7 +90,7 @@ internal sealed class OrdersService(
     {
         var order = await dbContext
             .Set<Order>()
-            .FirstOrDefaultAsync(o => o.Id == orderId, cancellationToken);
+            .SingleOrDefaultAsync(o => o.Id == orderId, cancellationToken);
 
         if (order is null)
         {
@@ -99,6 +103,26 @@ internal sealed class OrdersService(
         }
 
         dbContext.Set<Order>().Remove(order);
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task ConfirmOrderAsync(Guid orderId, CancellationToken cancellationToken)
+    {
+        var order = await dbContext
+            .Set<Order>()
+            .SingleOrDefaultAsync(o => o.Id == orderId, cancellationToken);
+
+        if (order is null)
+        {
+            throw new ArgumentException($"Order with Id: {orderId} not found");
+        }
+
+        if (order.Status != OrderStatus.Open)
+        {
+            throw new InvalidOperationException("Cannot confirm not open order");
+        }
+        
+        order.Confirm();
         await dbContext.SaveChangesAsync(cancellationToken);
     }
 }

@@ -42,6 +42,8 @@ internal sealed class InvoicesService(
                 invoice, 
                 cancellationToken);
         
+        order.MarkAsRealized();
+        
         await dbContext
             .SaveChangesAsync(cancellationToken);
 
